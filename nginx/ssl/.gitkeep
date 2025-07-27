@@ -1,0 +1,7 @@
+# SSL certificates directory
+# Place your SSL certificates here for production deployment:
+# - cert.pem (SSL certificate)
+# - key.pem (Private key)
+# 
+# For Let's Encrypt certificates, you can use:
+# sudo certbot --nginx -d your-domain.com

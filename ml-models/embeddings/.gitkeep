@@ -1,0 +1,2 @@
+# This directory will contain downloaded ML models for text embeddings
+# Models are downloaded automatically via download-models.sh script
