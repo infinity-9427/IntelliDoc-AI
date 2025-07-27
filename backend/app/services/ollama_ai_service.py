@@ -6,6 +6,7 @@ from typing import Dict, Any, List, Optional
 import httpx
 from textblob import TextBlob
 from langdetect import detect
+from .prompts import DocumentPrompts
 
 logger = logging.getLogger(__name__)
 
@@ -19,6 +20,9 @@ class OllamaAIService:
         
         # HTTP client for async requests
         self.client = httpx.AsyncClient(timeout=httpx.Timeout(self.timeout))
+        
+        # Initialize prompts manager
+        self.prompts = DocumentPrompts()
         
         logger.info(f"Initialized Ollama AI Service with host: {ollama_host}")
         
@@ -127,36 +131,30 @@ class OllamaAIService:
     async def _classify_document_with_llama(self, text: str) -> Dict[str, Any]:
         """Classify document type using Llama3"""
         try:
-            # Truncate text for analysis
-            max_length = 2000
-            sample_text = text[:max_length] if len(text) > max_length else text
+            start_time = asyncio.get_event_loop().time()
             
-            system_prompt = """You are a document classification expert. Classify documents into one of these categories:
-- invoice (bills, payment receipts, invoices)
-- contract (agreements, legal contracts, terms)
-- report (business reports, analysis, findings)
-- letter (personal/business correspondence)
-- resume (CV, job applications, professional profiles)
-- legal (legal documents, court papers)
-- academic (research papers, studies, academic content)
-- technical (technical documentation, specifications)
-- unknown (if none of the above fit)
-
-Respond with only a JSON object in this format:
-{"type": "document_type", "confidence": 0.95, "reasoning": "brief explanation"}"""
-
-            prompt = f"Classify this document:\n\n{sample_text}\n\nClassification:"
+            # Generate prompts using centralized prompt manager
+            system_prompt = self.prompts.get_classification_system_prompt()
+            user_prompt = self.prompts.get_classification_prompt(text)
             
-            response = await self._query_llama(prompt, system_prompt)
+            # Log prompt usage
+            self.prompts.log_prompt_usage("classification", len(text))
+            
+            response = await self._query_llama(user_prompt, system_prompt)
             
             if response:
                 # Try to parse JSON response
                 try:
                     result = json.loads(response)
+                    response_time = asyncio.get_event_loop().time() - start_time
+                    self.prompts.log_prompt_usage("classification", len(text), response_time)
+                    
                     return {
                         'type': result.get('type', 'unknown'),
                         'confidence': float(result.get('confidence', 0.5)),
-                        'reasoning': result.get('reasoning', '')
+                        'reasoning': result.get('reasoning', ''),
+                        'secondary_type': result.get('secondary_type', ''),
+                        'key_indicators': result.get('key_indicators', [])
                     }
                 except json.JSONDecodeError:
                     # Fallback parsing
@@ -178,25 +176,24 @@ Respond with only a JSON object in this format:
     async def _extract_entities_with_llama(self, text: str) -> List[Dict[str, Any]]:
         """Extract named entities using Llama3"""
         try:
-            # Truncate text for analysis
-            max_length = 1500
-            sample_text = text[:max_length] if len(text) > max_length else text
+            start_time = asyncio.get_event_loop().time()
             
-            system_prompt = """You are a named entity recognition expert. Extract important entities from the text.
-Focus on: PERSON (people names), ORG (organizations), LOC (locations), MISC (miscellaneous important terms).
-
-Respond with only a JSON array of entities in this format:
-[{"text": "entity_text", "label": "PERSON|ORG|LOC|MISC", "confidence": 0.95}]"""
-
-            prompt = f"Extract named entities from this text:\n\n{sample_text}\n\nEntities:"
+            # Generate prompts using centralized prompt manager
+            system_prompt = self.prompts.get_entity_extraction_system_prompt()
+            user_prompt = self.prompts.get_entity_extraction_prompt(text)
             
-            response = await self._query_llama(prompt, system_prompt)
+            # Log prompt usage
+            self.prompts.log_prompt_usage("entity_extraction", len(text))
+            
+            response = await self._query_llama(user_prompt, system_prompt)
             
             if response:
                 try:
                     # Try to parse JSON response
                     entities = json.loads(response)
                     if isinstance(entities, list):
+                        response_time = asyncio.get_event_loop().time() - start_time
+                        self.prompts.log_prompt_usage("entity_extraction", len(text), response_time)
                         return entities[:20]  # Limit to top 20
                 except json.JSONDecodeError:
                     # Try to extract entities using regex
@@ -212,19 +209,16 @@ Respond with only a JSON array of entities in this format:
     async def _analyze_sentiment_with_llama(self, text: str) -> Dict[str, Any]:
         """Analyze sentiment using Llama3"""
         try:
-            # Use first part of document for sentiment
-            max_length = 1000
-            sample_text = text[:max_length] if len(text) > max_length else text
+            start_time = asyncio.get_event_loop().time()
             
-            system_prompt = """You are a sentiment analysis expert. Analyze the overall sentiment of the text.
-Classify as: positive, negative, or neutral.
-
-Respond with only a JSON object in this format:
-{"sentiment": "positive|negative|neutral", "confidence": 0.95, "reasoning": "brief explanation"}"""
-
-            prompt = f"Analyze the sentiment of this text:\n\n{sample_text}\n\nSentiment:"
+            # Generate prompts using centralized prompt manager
+            system_prompt = self.prompts.get_sentiment_system_prompt()
+            user_prompt = self.prompts.get_sentiment_prompt(text)
             
-            response = await self._query_llama(prompt, system_prompt)
+            # Log prompt usage
+            self.prompts.log_prompt_usage("sentiment", len(text))
+            
+            response = await self._query_llama(user_prompt, system_prompt)
             
             if response:
                 try:
@@ -232,12 +226,17 @@ Respond with only a JSON object in this format:
                     sentiment = result.get('sentiment', 'neutral')
                     confidence = float(result.get('confidence', 0.5))
                     
+                    response_time = asyncio.get_event_loop().time() - start_time
+                    self.prompts.log_prompt_usage("sentiment", len(text), response_time)
+                    
                     return {
                         'overall_sentiment': sentiment,
                         'confidence': confidence,
                         'reasoning': result.get('reasoning', ''),
+                        'key_phrases': result.get('key_phrases', []),
+                        'intensity': result.get('intensity', 'medium'),
                         'polarity': 0.5 if sentiment == 'positive' else (-0.5 if sentiment == 'negative' else 0.0),
-                        'subjectivity': confidence
+                        'subjectivity': result.get('subjectivity', confidence)
                     }
                 except (json.JSONDecodeError, ValueError):
                     # Fallback parsing
@@ -269,16 +268,16 @@ Respond with only a JSON object in this format:
             if len(text) < 200:
                 return text[:150] + "..." if len(text) > 150 else text
             
-            # Use a reasonable chunk for summarization
-            max_length = 3000
-            sample_text = text[:max_length] if len(text) > max_length else text
+            start_time = asyncio.get_event_loop().time()
             
-            system_prompt = """You are a text summarization expert. Create a concise summary of the document content.
-Keep the summary under 200 words and focus on the most important points."""
-
-            prompt = f"Summarize this document:\n\n{sample_text}\n\nSummary:"
+            # Generate prompts using centralized prompt manager
+            system_prompt = self.prompts.get_summarization_system_prompt()
+            user_prompt = self.prompts.get_summarization_prompt(text)
             
-            response = await self._query_llama(prompt, system_prompt)
+            # Log prompt usage
+            self.prompts.log_prompt_usage("summarization", len(text))
+            
+            response = await self._query_llama(user_prompt, system_prompt)
             
             if response and len(response.strip()) > 10:
                 # Clean up the response
@@ -286,6 +285,9 @@ Keep the summary under 200 words and focus on the most important points."""
                 # Remove any JSON artifacts
                 summary = re.sub(r'^[{}\[\]"]*', '', summary)
                 summary = re.sub(r'[{}\[\]"]*$', '', summary)
+                
+                response_time = asyncio.get_event_loop().time() - start_time
+                self.prompts.log_prompt_usage("summarization", len(text), response_time)
                 
                 return summary[:500] + "..." if len(summary) > 500 else summary
             
