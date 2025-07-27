@@ -1,170 +1,105 @@
 # IntelliDoc AI - Smart Document Intelligence Platform
 
-## 🚀 Vision Statement
-**"Democratizing Enterprise-Grade Document Intelligence"**
+## 🚀 Overview
+Transform any document into actionable insights using cutting-edge AI. Built for organizations that need enterprise-grade document processing without the enterprise costs.
 
-Transform any document into actionable insights using cutting-edge AI - completely free, private, and locally-hosted. Built for startups, researchers, and privacy-conscious organizations who need enterprise capabilities without enterprise costs.
+## 🎯 The Problem
+Organizations struggle with:
+- Manual document processing that takes hours
+- Extracting structured data from unstructured documents
+- Language barriers in global document workflows
+- High costs of enterprise document processing solutions
+- Data privacy concerns with cloud-based services
 
-## 🎯 Project Overview
-An intelligent document processing ecosystem that goes beyond simple OCR to provide:
-- **Smart Content Analysis** - AI-powered document understanding
-- **Multi-language Intelligence** - Global document processing capabilities  
-- **Privacy-First Architecture** - Zero data leaves your infrastructure
-- **Enterprise Features** - Advanced analytics, batch processing, API-first design
-- **Startup-Ready** - Scales from prototype to production without licensing costs
-
-## 🛠️ Free Technology Stack (Zero-Cost Innovation)
-- **Backend**: Python + FastAPI (Free)
-- **AI/ML Stack**: 
-  - Tesseract + EasyOCR (Free OCR engines)
-  - spaCy + transformers (Free NLP)
-  - OpenCV (Free computer vision)
-  - scikit-learn (Free ML algorithms)
-- **Database**: PostgreSQL + pgvector (Free vector DB)
-- **Search**: Elasticsearch (Free tier)
-- **Queue**: Redis + Celery (Free)
-- **Frontend**: Next.js + TypeScript + Tailwind (Free)
-- **Container**: Docker + Docker Compose (Free)
-- **Storage**: Local file system + MinIO (Free S3-compatible)
-- **Monitoring**: Prometheus + Grafana (Free)
-- **Security**: OAuth2 + JWT (Free)
+## � Our Solution
+IntelliDoc AI provides:
+- **Intelligent Document Processing** - Automatically extract text, entities, and insights from any document
+- **Multi-Language Support** - Process documents in 100+ languages seamlessly
+- **Privacy-First Design** - All processing happens on your infrastructure
+- **Enterprise Features** - Advanced analytics, batch processing, and API integration
+- **Zero Licensing Costs** - Completely free and open-source
 
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Docker and Docker Compose
-- 8GB RAM minimum (16GB recommended)
+- Docker installed on your system
+- 8GB RAM minimum
 - 10GB free disk space
 
-### 1. Clone and Setup
+### Setup & Launch
 ```bash
+# 1. Clone the repository
 git clone <repository-url>
 cd local-pdf-converter
-cp .env.example .env
-```
 
-### 2. Start Services
-```bash
-# Development mode
+# 2. Initialize the system
+./scripts/setup.sh
+
+# 3. Start the application
 ./scripts/dev-start.sh
-
-# Production mode
-./scripts/prod-deploy.sh
 ```
 
-### 3. Access the Application
-- **Frontend**: http://localhost:3000
+### Access Your Application
+- **Web Interface**: http://localhost:3000
 - **API Documentation**: http://localhost:8000/docs
-- **Monitoring**: http://localhost:3001 (Grafana)
+- **Monitoring Dashboard**: http://localhost:3001
 
-## 📁 Project Structure
+## ✨ Key Features
 
-```
-local-pdf-converter/
-├── README.md
-├── docker-compose.yml
-├── docker-compose.prod.yml
-├── .env.example
-├── .gitignore
-├── LICENSE
-├── docs/
-├── backend/
-├── frontend/
-├── monitoring/
-├── ml-models/
-└── scripts/
-```
+### Document Intelligence
+- **Smart Classification** - Automatically identify document types (invoices, contracts, reports, resumes)
+- **Entity Extraction** - Extract names, dates, amounts, addresses, and other key information
+- **Content Analysis** - Generate summaries, analyze sentiment, and detect key insights
+- **Quality Assessment** - Confidence scoring and processing recommendations
 
-## 🧠 Intelligent Features
+### Multi-Language Processing
+- **Global Support** - Process documents in 100+ languages
+- **Auto-Detection** - Intelligent language identification
+- **Cross-Language Search** - Find content across different languages
 
-### 1. Smart Document Understanding
-- **Document Classification**: Auto-detect document types (invoices, contracts, reports, resumes)
-- **Entity Extraction**: Extract names, dates, amounts, addresses using free NLP models
-- **Sentiment Analysis**: Analyze document tone and sentiment
-- **Key Information Extraction**: Smart summaries and bullet points
-- **Table Detection & Extraction**: Advanced table understanding with structure preservation
+### Advanced Capabilities
+- **Batch Processing** - Handle thousands of documents efficiently
+- **Semantic Search** - Find similar documents using AI-powered search
+- **Real-Time Processing** - Live progress updates and instant results
+- **API Integration** - Complete REST API for system integration
 
-### 2. Multi-Language Intelligence
-- **100+ Language Support**: Leveraging free Tesseract language packs
-- **Auto Language Detection**: Smart language identification
-- **Translation Pipeline**: Free translation using Helsinki-NLP models
-- **Cross-Language Search**: Find content across different languages
+## 🛡️ Security & Privacy
+- **Local Processing** - All data stays on your infrastructure
+- **Enterprise Security** - JWT authentication and role-based access
+- **Audit Trails** - Complete processing history and logging
+- **Compliance Ready** - GDPR and HIPAA compatible design
 
-### 3. Advanced Analytics & Insights
-- **Document Similarity**: Find related documents using vector embeddings
-- **Content Trends**: Analytics dashboard showing document patterns
-- **Compliance Scanning**: PII detection and data classification
-- **Quality Metrics**: OCR confidence scoring and improvement suggestions
-- **Batch Processing Intelligence**: Smart queuing and resource optimization
+## � Getting Started
 
-## 🔧 Development
+For developers and system administrators:
 
-### Backend Development
+### Development Setup
 ```bash
 cd backend
-uv venv
-source .venv/bin/activate
+uv venv && source .venv/bin/activate
 uv pip install -r requirements.txt
 uvicorn app.main:app --reload
 ```
 
-### Frontend Development
 ```bash
 cd frontend
-pnpm install
-pnpm dev
+pnpm install && pnpm dev
 ```
 
-### ML Models Setup
+### Production Deployment
 ```bash
-./ml-models/download-models.sh
+./scripts/prod-deploy.sh
 ```
 
-## 📊 Monitoring
+## 📊 Performance & Monitoring
+- **Real-time Dashboards** - Monitor system performance and usage
+- **Health Checks** - Automated system status monitoring  
+- **Resource Optimization** - Intelligent load balancing and scaling
 
-Access monitoring dashboards:
-- **Prometheus**: http://localhost:9090
-- **Grafana**: http://localhost:3001 (admin/admin)
-- **Health Check**: http://localhost:8000/health
-
-## 🛡️ Security Features
-
-- **Privacy-First**: All processing happens locally
-- **Authentication**: JWT-based auth system
-- **Rate Limiting**: API protection against abuse
-- **Input Validation**: Comprehensive file validation
-- **Audit Logging**: Complete processing history
-
-## 📖 API Documentation
-
-Interactive API documentation is available at:
-- **Swagger UI**: http://localhost:8000/docs
-- **ReDoc**: http://localhost:8000/redoc
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests
-5. Submit a pull request
-
-See [CONTRIBUTING.md](docs/CONTRIBUTING.md) for detailed guidelines.
+## 🤝 Support & Documentation
+- **Complete API Documentation** - Interactive Swagger/OpenAPI docs
+- **Developer Guides** - Comprehensive setup and integration guides
+- **Community Support** - Active development and issue resolution
 
 ## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🆘 Support
-
-- **Documentation**: [docs/](docs/)
-- **Issues**: GitHub Issues
-- **Discussions**: GitHub Discussions
-
-## 🌟 Roadmap
-
-- [ ] Advanced AI models integration
-- [ ] Real-time collaboration features
-- [ ] Mobile app development
-- [ ] Cloud deployment options
-- [ ] Enterprise features
+MIT License - Free for commercial and personal use

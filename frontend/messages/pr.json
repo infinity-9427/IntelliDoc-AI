@@ -1,0 +1,108 @@
+{
+  "LocaleSwitcher": {
+    "label": "Mudar idioma",
+    "locale": "{locale, select, es {🇪🇸 Espanhol} en {🇺🇸 Inglês} de {🇩🇪 Alemão} fr {🇫🇷 Francês} it {🇮🇹 Italiano} pr {🇵🇹 Português} other {Desconhecido}}"
+  },
+  "Metadata": {
+    "title": "IntelliDoc AI - Processamento Inteligente de Documentos",
+    "description": "Faça upload dos seus documentos e deixe nossa IA extrair texto, analisar conteúdo e converter arquivos em dados estruturados. Simples, rápido e seguro."
+  },
+  "Header": {
+    "brand": "IntelliDoc AI",
+    "subtitle": "Plataforma de Inteligência de Documentos",
+    "navigation": {
+      "upload": "Upload"
+    },
+    "cta": "Iniciar Upload"
+  },
+  "Hero": {
+    "badge": "Inteligência de Documentos com IA",
+    "title": "Processamento Inteligente",
+    "titleHighlight": "de Documentos",
+    "description": "Faça upload dos seus documentos e deixe nossa IA extrair texto, analisar conteúdo e converter arquivos em dados estruturados. Simples, rápido e seguro.",
+    "features": [
+      {
+        "title": "Extração de Texto",
+        "description": "Extraia texto de PDFs, imagens e documentos com tecnologia OCR de alta precisão."
+      },
+      {
+        "title": "Conversão de Formatos", 
+        "description": "Converta entre formatos de documentos: PDF para texto, imagens para PDFs pesquisáveis e mais."
+      },
+      {
+        "title": "Processamento Seguro",
+        "description": "Seus documentos são processados com segurança e não são armazenados em nossos servidores."
+      }
+    ],
+    "cta": {
+      "text": "Pronto para processar seus documentos? Comece fazendo upload abaixo.",
+      "badges": [
+        "Suporta PDF, DOC, Imagens",
+        "Até 50MB por arquivo", 
+        "Grátis para usar"
+      ]
+    }
+  },
+  "FileUploader": {
+    "header": {
+      "badge": "Centro de Processamento de Documentos",
+      "title": "Faça Upload dos Seus Documentos",
+      "description": "Faça upload de documentos para extrair insights, analisar conteúdo e transformar dados não estruturados em inteligência acionável. Nossa IA suporta múltiplos formatos e processa documentos com segurança."
+    },
+    "dropzone": {
+      "title": "Arraste e solte seus arquivos aqui",
+      "subtitle": "ou clique para navegar pelos seus arquivos",
+      "formats": ["PDF", "DOC", "DOCX", "TXT", "Imagens"]
+    },
+    "fileList": {
+      "title": "Arquivos",
+      "actions": {
+        "uploadAll": "Upload de Todos",
+        "clearAll": "Limpar Todos"
+      }
+    },
+    "status": {
+      "pending": "pendente",
+      "uploading": "fazendo upload", 
+      "completed": "concluído",
+      "error": "erro"
+    },
+    "stats": {
+      "totalFiles": "Arquivos Totais",
+      "processed": "Processados",
+      "totalSize": "Tamanho Total"
+    },
+    "validation": {
+      "fileSizeError": "O tamanho do arquivo deve ser menor que 50MB",
+      "fileTypeError": "Tipo de arquivo não suportado. Por favor, faça upload de arquivos PDF, DOC, DOCX, TXT ou imagens.",
+      "duplicateFileError": "Um arquivo com este nome já existe"
+    }
+  },
+  "Footer": {
+    "brand": {
+      "name": "IntelliDoc AI",
+      "description": "Processamento inteligente de documentos feito simples. Faça upload, extraia, converta e baixe seus documentos processados com tecnologia alimentada por IA."
+    },
+    "sections": {
+      "whatWeDo": {
+        "title": "O Que Fazemos",
+        "items": [
+          "Extração de texto de PDFs e imagens",
+          "Conversão de formatos de documentos", 
+          "OCR e análise de conteúdo",
+          "Processamento seguro de documentos"
+        ]
+      },
+      "howToUse": {
+        "title": "Como Usar",
+        "steps": [
+          "Faça upload de seus documentos usando arrastar e soltar",
+          "Aguarde o processamento da IA ser concluído",
+          "Baixe seus resultados processados"
+        ]
+      }
+    },
+    "copyright": "© {year} IntelliDoc AI. Todos os direitos reservados.",
+    "tagline": "Construído com tecnologia IA moderna"
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "LocaleSwitcher": {
+    "label": "Changer de langue",
+    "locale": "{locale, select, es {🇪🇸 Espagnol} en {🇺🇸 Anglais} de {🇩🇪 Allemand} fr {🇫🇷 Français} it {🇮🇹 Italien} pr {🇵🇹 Portugais} other {Inconnu}}"
+  },
+  "Metadata": {
+    "title": "IntelliDoc AI - Traitement Intelligent de Documents",
+    "description": "Téléchargez vos documents et laissez notre IA extraire du texte, analyser le contenu et convertir les fichiers en données structurées. Simple, rapide et sécurisé."
+  },
+  "Header": {
+    "brand": "IntelliDoc AI",
+    "subtitle": "Plateforme d'Intelligence Documentaire",
+    "navigation": {
+      "upload": "Télécharger"
+    },
+    "cta": "Commencer le téléchargement"
+  },
+  "Hero": {
+    "badge": "Intelligence Documentaire alimentée par l'IA",
+    "title": "Traitement Intelligent",
+    "titleHighlight": "de Documents",
+    "description": "Téléchargez vos documents et laissez notre IA extraire du texte, analyser le contenu et convertir les fichiers en données structurées. Simple, rapide et sécurisé.",
+    "features": [
+      {
+        "title": "Extraction de Texte",
+        "description": "Extrayez du texte à partir de PDFs, d'images et de documents avec une technologie OCR de haute précision."
+      },
+      {
+        "title": "Conversion de Formats", 
+        "description": "Convertissez entre les formats de documents : PDF vers texte, images vers PDFs consultables et plus."
+      },
+      {
+        "title": "Traitement Sécurisé",
+        "description": "Vos documents sont traités de manière sécurisée et ne sont pas stockés sur nos serveurs."
+      }
+    ],
+    "cta": {
+      "text": "Prêt à traiter vos documents ? Commencez à télécharger ci-dessous.",
+      "badges": [
+        "Supporte PDF, DOC, Images",
+        "Jusqu'à 50MB par fichier", 
+        "Gratuit à utiliser"
+      ]
+    }
+  },
+  "FileUploader": {
+    "header": {
+      "badge": "Centre de Traitement de Documents",
+      "title": "Téléchargez Vos Documents",
+      "description": "Téléchargez des documents pour extraire des informations, analyser le contenu et transformer des données non structurées en intelligence exploitable. Notre IA supporte plusieurs formats et traite les documents de manière sécurisée."
+    },
+    "dropzone": {
+      "title": "Glissez et déposez vos fichiers ici",
+      "subtitle": "ou cliquez pour parcourir vos fichiers",
+      "formats": ["PDF", "DOC", "DOCX", "TXT", "Images"]
+    },
+    "fileList": {
+      "title": "Fichiers",
+      "actions": {
+        "uploadAll": "Tout télécharger",
+        "clearAll": "Tout effacer"
+      }
+    },
+    "status": {
+      "pending": "en attente",
+      "uploading": "téléchargement", 
+      "completed": "terminé",
+      "error": "erreur"
+    },
+    "stats": {
+      "totalFiles": "Fichiers Totaux",
+      "processed": "Traités",
+      "totalSize": "Taille Totale"
+    },
+    "validation": {
+      "fileSizeError": "La taille du fichier doit être inférieure à 50MB",
+      "fileTypeError": "Type de fichier non supporté. Veuillez télécharger des fichiers PDF, DOC, DOCX, TXT ou des images.",
+      "duplicateFileError": "Un fichier avec ce nom existe déjà"
+    }
+  },
+  "Footer": {
+    "brand": {
+      "name": "IntelliDoc AI",
+      "description": "Traitement intelligent de documents rendu simple. Téléchargez, extrayez, convertissez et téléchargez vos documents traités avec une technologie alimentée par l'IA."
+    },
+    "sections": {
+      "whatWeDo": {
+        "title": "Ce que nous faisons",
+        "items": [
+          "Extraction de texte à partir de PDFs et d'images",
+          "Conversion de formats de documents", 
+          "OCR et analyse de contenu",
+          "Traitement sécurisé de documents"
+        ]
+      },
+      "howToUse": {
+        "title": "Comment utiliser",
+        "steps": [
+          "Téléchargez vos documents en glisser-déposer",
+          "Attendez que le traitement IA soit terminé",
+          "Téléchargez vos résultats traités"
+        ]
+      }
+    },
+    "copyright": "© {year} IntelliDoc AI. Tous droits réservés.",
+    "tagline": "Construit avec une technologie IA moderne"
+  }
+}

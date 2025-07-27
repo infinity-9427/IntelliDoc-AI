@@ -1,0 +1,108 @@
+{
+  "LocaleSwitcher": {
+    "label": "Change language",
+    "locale": "{locale, select, es {🇪🇸 Spanish} en {🇺🇸 English} de {🇩🇪 German} fr {🇫🇷 French} it {🇮🇹 Italian} pr {🇵🇹 Portuguese} other {Unknown}}"
+  },
+  "Metadata": {
+    "title": "IntelliDoc AI - Smart Document Processing",
+    "description": "Upload your documents and let our AI extract text, analyze content, and convert files into structured data. Simple, fast, and secure document processing."
+  },
+  "Header": {
+    "brand": "IntelliDoc AI",
+    "subtitle": "Document Intelligence Platform",
+    "navigation": {
+      "upload": "Upload"
+    },
+    "cta": "Start Upload"
+  },
+  "Hero": {
+    "badge": "AI-Powered Document Intelligence",
+    "title": "Smart Document",
+    "titleHighlight": "Processing",
+    "description": "Upload your documents and let our AI extract text, analyze content, and convert files into structured data. Simple, fast, and secure.",
+    "features": [
+      {
+        "title": "Text Extraction",
+        "description": "Extract text from PDFs, images, and documents with high accuracy OCR technology."
+      },
+      {
+        "title": "Format Conversion", 
+        "description": "Convert between document formats: PDF to text, images to searchable PDFs, and more."
+      },
+      {
+        "title": "Secure Processing",
+        "description": "Your documents are processed securely and are not stored on our servers."
+      }
+    ],
+    "cta": {
+      "text": "Ready to process your documents? Start uploading below.",
+      "badges": [
+        "Supports PDF, DOC, Images",
+        "Up to 50MB per file", 
+        "Free to use"
+      ]
+    }
+  },
+  "FileUploader": {
+    "header": {
+      "badge": "Document Processing Center",
+      "title": "Upload Your Documents",
+      "description": "Upload documents to extract insights, analyze content, and transform unstructured data into actionable intelligence. Our AI supports multiple formats and processes documents securely."
+    },
+    "dropzone": {
+      "title": "Drag and drop your files here",
+      "subtitle": "or click to browse your files",
+      "formats": ["PDF", "DOC", "DOCX", "TXT", "Images"]
+    },
+    "fileList": {
+      "title": "Files",
+      "actions": {
+        "uploadAll": "Upload All",
+        "clearAll": "Clear All"
+      }
+    },
+    "status": {
+      "pending": "pending",
+      "uploading": "uploading", 
+      "completed": "completed",
+      "error": "error"
+    },
+    "stats": {
+      "totalFiles": "Total Files",
+      "processed": "Processed",
+      "totalSize": "Total Size"
+    },
+    "validation": {
+      "fileSizeError": "File size must be less than 50MB",
+      "fileTypeError": "File type not supported. Please upload PDF, DOC, DOCX, TXT, or image files.",
+      "duplicateFileError": "File with this name already exists"
+    }
+  },
+  "Footer": {
+    "brand": {
+      "name": "IntelliDoc AI",
+      "description": "Smart document processing made simple. Upload, extract, convert, and download your processed documents with AI-powered technology."
+    },
+    "sections": {
+      "whatWeDo": {
+        "title": "What We Do",
+        "items": [
+          "Text extraction from PDFs and images",
+          "Document format conversion", 
+          "OCR and content analysis",
+          "Secure document processing"
+        ]
+      },
+      "howToUse": {
+        "title": "How to Use",
+        "steps": [
+          "Upload your documents using drag & drop",
+          "Wait for AI processing to complete",
+          "Download your processed results"
+        ]
+      }
+    },
+    "copyright": "© {year} IntelliDoc AI. All rights reserved.",
+    "tagline": "Built with modern AI technology"
+  }
+}

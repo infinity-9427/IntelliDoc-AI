@@ -1,0 +1,108 @@
+{
+  "LocaleSwitcher": {
+    "label": "Sprache wechseln",
+    "locale": "{locale, select, es {🇪🇸 Spanisch} en {🇺🇸 Englisch} de {🇩🇪 Deutsch} fr {🇫🇷 Französisch} it {🇮🇹 Italienisch} pr {🇵🇹 Portugiesisch} other {Unbekannt}}"
+  },
+  "Metadata": {
+    "title": "IntelliDoc AI - Intelligente Dokumentenverarbeitung",
+    "description": "Laden Sie Ihre Dokumente hoch und lassen Sie unsere KI Text extrahieren, Inhalte analysieren und Dateien in strukturierte Daten umwandeln. Einfach, schnell und sicher."
+  },
+  "Header": {
+    "brand": "IntelliDoc AI",
+    "subtitle": "Dokumenten-Intelligenz-Plattform",
+    "navigation": {
+      "upload": "Hochladen"
+    },
+    "cta": "Upload starten"
+  },
+  "Hero": {
+    "badge": "KI-gestützte Dokumenten-Intelligenz",
+    "title": "Intelligente Dokumenten-",
+    "titleHighlight": "verarbeitung",
+    "description": "Laden Sie Ihre Dokumente hoch und lassen Sie unsere KI Text extrahieren, Inhalte analysieren und Dateien in strukturierte Daten umwandeln. Einfach, schnell und sicher.",
+    "features": [
+      {
+        "title": "Textextraktion",
+        "description": "Extrahieren Sie Text aus PDFs, Bildern und Dokumenten mit hochpräziser OCR-Technologie."
+      },
+      {
+        "title": "Formatkonvertierung", 
+        "description": "Konvertieren zwischen Dokumentformaten: PDF zu Text, Bilder zu durchsuchbaren PDFs und mehr."
+      },
+      {
+        "title": "Sichere Verarbeitung",
+        "description": "Ihre Dokumente werden sicher verarbeitet und nicht auf unseren Servern gespeichert."
+      }
+    ],
+    "cta": {
+      "text": "Bereit, Ihre Dokumente zu verarbeiten? Beginnen Sie unten mit dem Upload.",
+      "badges": [
+        "Unterstützt PDF, DOC, Bilder",
+        "Bis zu 50MB pro Datei", 
+        "Kostenlos zu verwenden"
+      ]
+    }
+  },
+  "FileUploader": {
+    "header": {
+      "badge": "Dokumentenverarbeitungszentrum",
+      "title": "Laden Sie Ihre Dokumente hoch",
+      "description": "Laden Sie Dokumente hoch, um Erkenntnisse zu extrahieren, Inhalte zu analysieren und unstrukturierte Daten in verwertbare Intelligenz umzuwandeln. Unsere KI unterstützt mehrere Formate und verarbeitet Dokumente sicher."
+    },
+    "dropzone": {
+      "title": "Ziehen Sie Ihre Dateien hierher",
+      "subtitle": "oder klicken Sie, um Ihre Dateien zu durchsuchen",
+      "formats": ["PDF", "DOC", "DOCX", "TXT", "Bilder"]
+    },
+    "fileList": {
+      "title": "Dateien",
+      "actions": {
+        "uploadAll": "Alle hochladen",
+        "clearAll": "Alle löschen"
+      }
+    },
+    "status": {
+      "pending": "ausstehend",
+      "uploading": "wird hochgeladen", 
+      "completed": "abgeschlossen",
+      "error": "Fehler"
+    },
+    "stats": {
+      "totalFiles": "Dateien insgesamt",
+      "processed": "Verarbeitet",
+      "totalSize": "Gesamtgröße"
+    },
+    "validation": {
+      "fileSizeError": "Dateigröße muss weniger als 50MB betragen",
+      "fileTypeError": "Dateityp nicht unterstützt. Bitte laden Sie PDF-, DOC-, DOCX-, TXT- oder Bilddateien hoch.",
+      "duplicateFileError": "Eine Datei mit diesem Namen existiert bereits"
+    }
+  },
+  "Footer": {
+    "brand": {
+      "name": "IntelliDoc AI",
+      "description": "Intelligente Dokumentenverarbeitung leicht gemacht. Laden Sie hoch, extrahieren Sie, konvertieren Sie und laden Sie Ihre verarbeiteten Dokumente mit KI-gestützter Technologie herunter."
+    },
+    "sections": {
+      "whatWeDo": {
+        "title": "Was wir tun",
+        "items": [
+          "Textextraktion aus PDFs und Bildern",
+          "Dokumentformatkonvertierung", 
+          "OCR und Inhaltsanalyse",
+          "Sichere Dokumentenverarbeitung"
+        ]
+      },
+      "howToUse": {
+        "title": "Wie zu verwenden",
+        "steps": [
+          "Laden Sie Ihre Dokumente per Drag & Drop hoch",
+          "Warten Sie, bis die KI-Verarbeitung abgeschlossen ist",
+          "Laden Sie Ihre verarbeiteten Ergebnisse herunter"
+        ]
+      }
+    },
+    "copyright": "© {year} IntelliDoc AI. Alle Rechte vorbehalten.",
+    "tagline": "Gebaut mit moderner KI-Technologie"
+  }
+}

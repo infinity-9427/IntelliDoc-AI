@@ -1,0 +1,108 @@
+{
+  "LocaleSwitcher": {
+    "label": "Cambiar idioma",
+    "locale": "{locale, select, es {🇪🇸 Español} en {🇺🇸 Inglés} de {🇩🇪 Alemán} fr {🇫🇷 Francés} it {🇮🇹 Italiano} pr {🇵🇹 Portugués} other {Desconocido}}"
+  },
+  "Metadata": {
+    "title": "IntelliDoc AI - Procesamiento Inteligente de Documentos",
+    "description": "Sube tus documentos y deja que nuestra IA extraiga texto, analice contenido y convierta archivos en datos estructurados. Simple, rápido y seguro."
+  },
+  "Header": {
+    "brand": "IntelliDoc AI",
+    "subtitle": "Plataforma de Inteligencia de Documentos",
+    "navigation": {
+      "upload": "Subir"
+    },
+    "cta": "Comenzar Subida"
+  },
+  "Hero": {
+    "badge": "Inteligencia de Documentos con IA",
+    "title": "Procesamiento Inteligente",
+    "titleHighlight": "de Documentos",
+    "description": "Sube tus documentos y deja que nuestra IA extraiga texto, analice contenido y convierta archivos en datos estructurados. Simple, rápido y seguro.",
+    "features": [
+      {
+        "title": "Extracción de Texto",
+        "description": "Extrae texto de PDFs, imágenes y documentos con tecnología OCR de alta precisión."
+      },
+      {
+        "title": "Conversión de Formatos", 
+        "description": "Convierte entre formatos de documentos: PDF a texto, imágenes a PDFs buscables y más."
+      },
+      {
+        "title": "Procesamiento Seguro",
+        "description": "Tus documentos se procesan de forma segura y no se almacenan en nuestros servidores."
+      }
+    ],
+    "cta": {
+      "text": "¿Listo para procesar tus documentos? Comienza subiendo abajo.",
+      "badges": [
+        "Soporta PDF, DOC, Imágenes",
+        "Hasta 50MB por archivo", 
+        "Gratis para usar"
+      ]
+    }
+  },
+  "FileUploader": {
+    "header": {
+      "badge": "Centro de Procesamiento de Documentos",
+      "title": "Sube Tus Documentos",
+      "description": "Sube documentos para extraer información, analizar contenido y transformar datos no estructurados en inteligencia accionable. Nuestra IA soporta múltiples formatos y procesa documentos de forma segura."
+    },
+    "dropzone": {
+      "title": "Arrastra y suelta tus archivos aquí",
+      "subtitle": "o haz clic para explorar tus archivos",
+      "formats": ["PDF", "DOC", "DOCX", "TXT", "Imágenes"]
+    },
+    "fileList": {
+      "title": "Archivos",
+      "actions": {
+        "uploadAll": "Subir Todo",
+        "clearAll": "Limpiar Todo"
+      }
+    },
+    "status": {
+      "pending": "pendiente",
+      "uploading": "subiendo", 
+      "completed": "completado",
+      "error": "error"
+    },
+    "stats": {
+      "totalFiles": "Archivos Totales",
+      "processed": "Procesados",
+      "totalSize": "Tamaño Total"
+    },
+    "validation": {
+      "fileSizeError": "El tamaño del archivo debe ser menor a 50MB",
+      "fileTypeError": "Tipo de archivo no soportado. Por favor sube archivos PDF, DOC, DOCX, TXT o imágenes.",
+      "duplicateFileError": "Ya existe un archivo con este nombre"
+    }
+  },
+  "Footer": {
+    "brand": {
+      "name": "IntelliDoc AI",
+      "description": "Procesamiento inteligente de documentos hecho simple. Sube, extrae, convierte y descarga tus documentos procesados con tecnología potenciada por IA."
+    },
+    "sections": {
+      "whatWeDo": {
+        "title": "Qué Hacemos",
+        "items": [
+          "Extracción de texto de PDFs e imágenes",
+          "Conversión de formatos de documentos", 
+          "OCR y análisis de contenido",
+          "Procesamiento seguro de documentos"
+        ]
+      },
+      "howToUse": {
+        "title": "Cómo Usar",
+        "steps": [
+          "Sube tus documentos usando arrastrar y soltar",
+          "Espera a que se complete el procesamiento de IA",
+          "Descarga tus resultados procesados"
+        ]
+      }
+    },
+    "copyright": "© {year} IntelliDoc AI. Todos los derechos reservados.",
+    "tagline": "Construido con tecnología de IA moderna"
+  }
+}

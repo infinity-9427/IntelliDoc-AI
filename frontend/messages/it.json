@@ -1,0 +1,108 @@
+{
+  "LocaleSwitcher": {
+    "label": "Cambia lingua",
+    "locale": "{locale, select, es {🇪🇸 Spagnolo} en {🇺🇸 Inglese} de {🇩🇪 Tedesco} fr {🇫🇷 Francese} it {🇮🇹 Italiano} pr {🇵🇹Portoghese} other {Sconosciuto}}"
+  },
+  "Metadata": {
+    "title": "IntelliDoc AI - Elaborazione Intelligente di Documenti",
+    "description": "Carica i tuoi documenti e lascia che la nostra IA estragga testo, analizzi contenuti e converta file in dati strutturati. Semplice, veloce e sicuro."
+  },
+  "Header": {
+    "brand": "IntelliDoc AI",
+    "subtitle": "Piattaforma di Intelligenza Documentale",
+    "navigation": {
+      "upload": "Carica"
+    },
+    "cta": "Inizia Caricamento"
+  },
+  "Hero": {
+    "badge": "Intelligenza Documentale potenziata dall'IA",
+    "title": "Elaborazione Intelligente",
+    "titleHighlight": "di Documenti",
+    "description": "Carica i tuoi documenti e lascia che la nostra IA estragga testo, analizzi contenuti e converta file in dati strutturati. Semplice, veloce e sicuro.",
+    "features": [
+      {
+        "title": "Estrazione di Testo",
+        "description": "Estrai testo da PDF, immagini e documenti con tecnologia OCR ad alta precisione."
+      },
+      {
+        "title": "Conversione di Formati", 
+        "description": "Converti tra formati di documenti: PDF in testo, immagini in PDF ricercabili e altro."
+      },
+      {
+        "title": "Elaborazione Sicura",
+        "description": "I tuoi documenti vengono elaborati in modo sicuro e non sono memorizzati sui nostri server."
+      }
+    ],
+    "cta": {
+      "text": "Pronto a elaborare i tuoi documenti? Inizia a caricare qui sotto.",
+      "badges": [
+        "Supporta PDF, DOC, Immagini",
+        "Fino a 50MB per file", 
+        "Gratuito da usare"
+      ]
+    }
+  },
+  "FileUploader": {
+    "header": {
+      "badge": "Centro di Elaborazione Documenti",
+      "title": "Carica i Tuoi Documenti",
+      "description": "Carica documenti per estrarre informazioni, analizzare contenuti e trasformare dati non strutturati in intelligenza utilizzabile. La nostra IA supporta più formati ed elabora documenti in modo sicuro."
+    },
+    "dropzone": {
+      "title": "Trascina e rilascia i tuoi file qui",
+      "subtitle": "o clicca per sfogliare i tuoi file",
+      "formats": ["PDF", "DOC", "DOCX", "TXT", "Immagini"]
+    },
+    "fileList": {
+      "title": "File",
+      "actions": {
+        "uploadAll": "Carica Tutto",
+        "clearAll": "Cancella Tutto"
+      }
+    },
+    "status": {
+      "pending": "in attesa",
+      "uploading": "caricamento", 
+      "completed": "completato",
+      "error": "errore"
+    },
+    "stats": {
+      "totalFiles": "File Totali",
+      "processed": "Elaborati",
+      "totalSize": "Dimensione Totale"
+    },
+    "validation": {
+      "fileSizeError": "La dimensione del file deve essere inferiore a 50MB",
+      "fileTypeError": "Tipo di file non supportato. Si prega di caricare file PDF, DOC, DOCX, TXT o immagini.",
+      "duplicateFileError": "Un file con questo nome esiste già"
+    }
+  },
+  "Footer": {
+    "brand": {
+      "name": "IntelliDoc AI",
+      "description": "Elaborazione intelligente di documenti resa semplice. Carica, estrai, converti e scarica i tuoi documenti elaborati con tecnologia potenziata dall'IA."
+    },
+    "sections": {
+      "whatWeDo": {
+        "title": "Cosa Facciamo",
+        "items": [
+          "Estrazione di testo da PDF e immagini",
+          "Conversione di formati di documenti", 
+          "OCR e analisi del contenuto",
+          "Elaborazione sicura di documenti"
+        ]
+      },
+      "howToUse": {
+        "title": "Come Usare",
+        "steps": [
+          "Carica i tuoi documenti usando trascina e rilascia",
+          "Attendi che l'elaborazione IA sia completata",
+          "Scarica i tuoi risultati elaborati"
+        ]
+      }
+    },
+    "copyright": "© {year} IntelliDoc AI. Tutti i diritti riservati.",
+    "tagline": "Costruito con tecnologia IA moderna"
+  }
+}
