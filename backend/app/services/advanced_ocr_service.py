@@ -1,4 +1,9 @@
-import cv2
+# Use OpenCV compatibility layer
+try:
+    from app.utils.cv2_compat import cv2
+except ImportError:
+    cv2 = None
+
 import numpy as np
 import logging
 from typing import Dict, List, Any, Optional, Tuple

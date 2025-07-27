@@ -1,0 +1,45 @@
+version: '3.8'
+
+# This file contains development overrides
+# Run with: docker compose -f docker-compose.yml -f docker-compose.dev.yml up
+
+services:
+  # Override Ollama to ensure models are downloaded in development
+  ollama:
+    healthcheck:
+      start_period: 120s  # Give more time for model downloads in dev
+      interval: 15s
+    environment:
+      - OLLAMA_DEBUG=1
+
+  # Ensure backend waits for Ollama to be fully ready with models
+  backend:
+    depends_on:
+      ollama:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      - DEBUG=1
+      - LOG_LEVEL=DEBUG
+
+  # Celery workers also wait for Ollama
+  celery-worker:
+    depends_on:
+      ollama:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  celery-beat:
+    depends_on:
+      ollama:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy

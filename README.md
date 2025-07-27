@@ -11,7 +11,7 @@ Organizations struggle with:
 - High costs of enterprise document processing solutions
 - Data privacy concerns with cloud-based services
 
-## � Our Solution
+## ✨ Our Solution
 IntelliDoc AI provides:
 - **Intelligent Document Processing** - Automatically extract text, entities, and insights from any document
 - **Multi-Language Support** - Process documents in 100+ languages seamlessly
@@ -22,27 +22,38 @@ IntelliDoc AI provides:
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Docker installed on your system
-- 8GB RAM minimum
-- 10GB free disk space
+- Docker & Docker Compose installed
+- 8GB RAM minimum (16GB recommended)
+- 15GB free disk space (for AI models)
+- Internet connection for initial model download
 
-### Setup & Launch
+### One-Command Setup
 ```bash
 # 1. Clone the repository
-git clone <repository-url>
-cd local-pdf-converter
+git clone https://github.com/infinity-9427/IntelliDoc-AI.git
+cd IntelliDoc-AI
 
-# 2. Initialize the system
-./scripts/setup.sh
-
-# 3. Start the application
-./scripts/dev-start.sh
+# 2. Start everything (includes automatic AI model download)
+docker compose up --build -d
 ```
+
+**That's it!** 🎉 
+
+### What Happens Automatically:
+1. **Infrastructure Setup** - PostgreSQL, Redis, Elasticsearch, MinIO
+2. **AI Model Download** - LLaMA 3.2:3b (2GB) + Embedding models (274MB)
+3. **Service Startup** - Backend, Frontend, and all components
+4. **Health Checks** - Ensures everything is running correctly
+
+### Initial Setup Time:
+- **First run**: 5-8 minutes (includes model downloads)
+- **Subsequent runs**: 30-60 seconds
 
 ### Access Your Application
 - **Web Interface**: http://localhost:3000 (Available in 6 languages)
 - **API Documentation**: http://localhost:8000/docs
-- **Monitoring Dashboard**: http://localhost:3001
+- **Monitoring Dashboard**: http://localhost:3001 (Grafana)
+- **System Metrics**: http://localhost:9090 (Prometheus)
 
 **Language Access**: Simply add the language code to the URL:
 - English: http://localhost:3000/en
@@ -52,7 +63,90 @@ cd local-pdf-converter
 - Italian: http://localhost:3000/it
 - Portuguese: http://localhost:3000/pr
 
-## 🌍 International Features
+## 🐳 Docker Architecture
+
+### Container Services
+The application runs as a multi-container Docker stack:
+
+#### Core Services
+- **Backend** (`intellidoc-backend`) - FastAPI application with OCR and AI capabilities
+- **Frontend** (`intellidoc-frontend`) - Next.js web interface
+- **Ollama** (`intellidoc-ollama`) - LLM inference server with auto-model download
+
+#### Infrastructure Services  
+- **PostgreSQL** (`intellidoc-postgres`) - Primary database
+- **Redis** (`intellidoc-redis`) - Caching and session storage
+- **Elasticsearch** (`intellidoc-elasticsearch`) - Document search and indexing
+- **MinIO** (`intellidoc-minio`) - Object storage for files
+
+#### Monitoring Stack
+- **Prometheus** (`intellidoc-prometheus`) - Metrics collection
+- **Grafana** (`intellidoc-grafana`) - Monitoring dashboards
+
+### Container Health & Status
+```bash
+# Check all services status
+docker compose ps
+
+# View service logs
+docker compose logs [service-name]
+
+# Check AI models availability
+docker exec intellidoc-ollama ollama list
+```
+
+### Development Mode
+For development with debug logging and faster restart:
+```bash
+docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build -d
+```
+
+## 🔧 Troubleshooting
+
+### Common Issues
+
+#### Models Not Downloaded
+```bash
+# Restart Ollama service to retry model download
+docker compose restart ollama
+
+# Check download progress
+docker logs intellidoc-ollama -f
+```
+
+#### Port Conflicts
+If ports are already in use, modify `docker-compose.yml`:
+```yaml
+ports:
+  - "3001:3000"  # Change frontend port
+  - "8001:8000"  # Change backend port
+```
+
+#### Memory Issues
+For systems with limited RAM:
+```bash
+# Monitor resource usage
+docker stats
+
+# Stop non-essential services
+docker compose stop grafana prometheus
+```
+
+#### Complete Reset
+```bash
+# Stop and remove all containers and volumes
+docker compose down -v
+
+# Rebuild everything from scratch
+docker compose up --build -d
+```
+
+### Verification Steps
+1. **Check Container Health**: `docker compose ps`
+2. **Verify AI Models**: `docker exec intellidoc-ollama ollama list`
+3. **Test Frontend**: Visit http://localhost:3000
+4. **Test Backend API**: Visit http://localhost:8000/docs
+5. **Upload Test Document**: Use the web interface to process a sample PDF
 
 ### Comprehensive Localization
 - **6 Fully Translated Languages** - Complete interface localization

@@ -7,8 +7,13 @@ import pypdf
 import pytesseract
 from pdf2image import convert_from_path
 from PIL import Image
-import cv2
 import numpy as np
+
+# Use OpenCV compatibility layer
+try:
+    from app.utils.cv2_compat import cv2
+except ImportError:
+    cv2 = None
 
 from app.models.schemas import DocumentAnalysisResult
 from app.services.advanced_ocr_service import AdvancedOCRService

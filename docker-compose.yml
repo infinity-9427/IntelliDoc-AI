@@ -1,6 +1,27 @@
-version: '3.8'
-
 services:
+  # Ollama service for LLaMA3 AI processing
+  ollama:
+    image: ollama/ollama:latest
+    container_name: intellidoc-ollama
+    ports:
+      - "11434:11434"  # Standard Ollama port
+    volumes:
+      - ollama_data:/root/.ollama
+      - ./scripts/init-ollama.sh:/usr/local/bin/init-ollama.sh:ro
+    environment:
+      - OLLAMA_ORIGINS=*
+      - OLLAMA_HOST=0.0.0.0:11434
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    # Override entrypoint to run our init script
+    entrypoint: ["/bin/sh", "/usr/local/bin/init-ollama.sh"]
+    command: ["ollama", "serve"]
+
   postgres:
     image: postgres:15-alpine
     container_name: intellidoc-postgres
@@ -83,12 +104,16 @@ services:
       - MINIO_ENDPOINT=minio:9000
       - MINIO_ACCESS_KEY=intellidoc
       - MINIO_SECRET_KEY=intellidoc123
+      - OLLAMA_HOST=http://ollama:11434
+      - OLLAMA_MODEL=llama3.2:3b
+      - OLLAMA_EMBED_MODEL=nomic-embed-text
       - UPLOAD_DIR=/app/storage/uploads
       - PROCESSED_DIR=/app/storage/processed
       - TEMP_DIR=/app/storage/temp
       - MODELS_DIR=/app/storage/models
       - VECTORS_DIR=/app/storage/vectors
       - ML_MODELS_CACHE=/app/ml-models
+      - AI_SERVICE_TYPE=ollama
     volumes:
       - ./backend:/app
       - ./backend/storage:/app/storage
@@ -102,7 +127,9 @@ services:
         condition: service_healthy
       minio:
         condition: service_healthy
-    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+      ollama:
+        condition: service_healthy
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
       interval: 30s
@@ -121,12 +148,16 @@ services:
       - MINIO_ENDPOINT=minio:9000
       - MINIO_ACCESS_KEY=intellidoc
       - MINIO_SECRET_KEY=intellidoc123
+      - OLLAMA_HOST=http://ollama:11434
+      - OLLAMA_MODEL=llama3.2:3b
+      - OLLAMA_EMBED_MODEL=nomic-embed-text
       - UPLOAD_DIR=/app/storage/uploads
       - PROCESSED_DIR=/app/storage/processed
       - TEMP_DIR=/app/storage/temp
       - MODELS_DIR=/app/storage/models
       - VECTORS_DIR=/app/storage/vectors
       - ML_MODELS_CACHE=/app/ml-models
+      - AI_SERVICE_TYPE=ollama
     volumes:
       - ./backend:/app
       - ./backend/storage:/app/storage
@@ -137,6 +168,8 @@ services:
       redis:
         condition: service_healthy
       elasticsearch:
+        condition: service_healthy
+      ollama:
         condition: service_healthy
     command: celery -A app.core.celery_app worker --loglevel=info --concurrency=4
 
@@ -207,3 +240,4 @@ volumes:
   minio_data:
   prometheus_data:
   grafana_data:
+  ollama_data:
