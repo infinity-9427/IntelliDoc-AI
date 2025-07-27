@@ -1,0 +1,1 @@
+This is a test PDF document with some sample text for OCR processing. It contains multiple sentences and should be processed successfully by the AI system.

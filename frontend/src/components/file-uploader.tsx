@@ -7,20 +7,20 @@ import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
 import { Badge } from '@/components/ui/badge'
 import { Alert, AlertDescription } from '@/components/ui/alert'
-
-interface FileItem {
-  id: string
-  name: string
-  size: number
-  type: string
-  status: 'pending' | 'uploading' | 'completed' | 'error'
-  progress: number
-  file: File
-}
+import { useFileUpload, FileUploadState } from '@/hooks/useFileUpload'
 
 const FileUploader: React.FC = () => {
   const t = useTranslations('FileUploader')
-  const [files, setFiles] = useState<FileItem[]>([])
+  const { 
+    files, 
+    isUploading, 
+    addFiles, 
+    removeFile, 
+    clearAllFiles, 
+    uploadAllFiles,
+    downloadResult 
+  } = useFileUpload()
+  
   const [isDragActive, setIsDragActive] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -37,9 +37,6 @@ const FileUploader: React.FC = () => {
     const maxSize = 50 * 1024 * 1024 // 50MB
     const allowedTypes = [
       'application/pdf',
-      'application/msword',
-      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-      'text/plain',
       'image/jpeg',
       'image/png',
       'image/gif'
@@ -56,8 +53,8 @@ const FileUploader: React.FC = () => {
     return null
   }
 
-  const addFiles = useCallback((newFiles: File[]) => {
-    const validFiles: FileItem[] = []
+  const handleAddFiles = useCallback((newFiles: File[]) => {
+    const validFiles: File[] = []
     let hasError = false
 
     newFiles.forEach((file) => {
@@ -74,71 +71,18 @@ const FileUploader: React.FC = () => {
         return
       }
 
-      validFiles.push({
-        id: Math.random().toString(36).substr(2, 9),
-        name: file.name,
-        size: file.size,
-        type: file.type,
-        status: 'pending',
-        progress: 0,
-        file
-      })
+      validFiles.push(file)
     })
 
-    if (!hasError) {
+    if (!hasError && validFiles.length > 0) {
       setError(null)
-      setFiles(prev => [...prev, ...validFiles])
+      addFiles(validFiles)
     }
-  }, [files])
-
-  const removeFile = (id: string) => {
-    setFiles(prev => prev.filter(file => file.id !== id))
-  }
-
-  const clearAllFiles = () => {
-    setFiles([])
-    setError(null)
-  }
-
-  const simulateUpload = (fileId: string) => {
-    setFiles(prev => prev.map(file => 
-      file.id === fileId 
-        ? { ...file, status: 'uploading' as const }
-        : file
-    ))
-
-    let progress = 0
-    const interval = setInterval(() => {
-      progress += Math.random() * 20
-      if (progress >= 100) {
-        progress = 100
-        clearInterval(interval)
-        setFiles(prev => prev.map(file => 
-          file.id === fileId 
-            ? { ...file, status: 'completed' as const, progress: 100 }
-            : file
-        ))
-      } else {
-        setFiles(prev => prev.map(file => 
-          file.id === fileId 
-            ? { ...file, progress }
-            : file
-        ))
-      }
-    }, 200)
-  }
-
-  const uploadAllFiles = () => {
-    files.forEach(file => {
-      if (file.status === 'pending') {
-        simulateUpload(file.id)
-      }
-    })
-  }
+  }, [files, addFiles, t])
 
   const handleFileInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = Array.from(event.target.files || [])
-    addFiles(selectedFiles)
+    handleAddFiles(selectedFiles)
     event.target.value = ''
   }
 
@@ -160,17 +104,24 @@ const FileUploader: React.FC = () => {
     setIsDragActive(false)
     
     const droppedFiles = Array.from(e.dataTransfer.files)
-    addFiles(droppedFiles)
+    handleAddFiles(droppedFiles)
   }
 
   const handleClick = () => {
     fileInputRef.current?.click()
   }
 
+  const handleDownload = async (file: FileUploadState, format: 'docx' | 'txt' = 'docx') => {
+    try {
+      await downloadResult(file.id, format)
+    } catch (error) {
+      console.error('Download failed:', error)
+      setError('Download failed. Please try again.')
+    }
+  }
+
   const getFileIcon = (type: string): string => {
     if (type.includes('pdf')) return 'ri-file-pdf-line'
-    if (type.includes('word') || type.includes('document')) return 'ri-file-word-line'
-    if (type.includes('text')) return 'ri-file-text-line'
     if (type.includes('image')) return 'ri-image-line'
     return 'ri-file-line'
   }
@@ -178,10 +129,21 @@ const FileUploader: React.FC = () => {
   const getStatusIcon = (status: string): string => {
     switch (status) {
       case 'pending': return 'ri-time-line'
-      case 'uploading': return 'ri-loader-2-line'
+      case 'uploading': return 'ri-upload-line'
+      case 'processing': return 'ri-loader-2-line'
       case 'completed': return 'ri-checkbox-circle-line'
       case 'error': return 'ri-error-warning-line'
       default: return 'ri-file-line'
+    }
+  }
+
+  const getStatusColor = (status: string): string => {
+    switch (status) {
+      case 'completed': return 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300'
+      case 'error': return 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300'
+      case 'processing': 
+      case 'uploading': return 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300'
+      default: return 'bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-300'
     }
   }
 
@@ -243,7 +205,7 @@ const FileUploader: React.FC = () => {
             </div>
 
             <div className="flex justify-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
-              {t.raw('dropzone.formats').map((format: string, index: number) => (
+              {['PDF', 'PNG', 'JPG', 'JPEG'].map((format: string, index: number) => (
                 <Badge key={index} variant="outline">{format}</Badge>
               ))}
             </div>
@@ -254,7 +216,7 @@ const FileUploader: React.FC = () => {
               multiple
               onChange={handleFileInput}
               className="hidden"
-              accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png,.gif"
+              accept=".pdf,.jpg,.jpeg,.png,.gif"
             />
           </div>
         </div>
@@ -270,16 +232,17 @@ const FileUploader: React.FC = () => {
             <div className="space-x-2">
               <Button
                 onClick={uploadAllFiles}
-                disabled={files.every(f => f.status !== 'pending')}
+                disabled={files.every(f => f.status !== 'pending') || isUploading}
                 size="sm"
               >
                 <i className="ri-upload-line w-4 h-4 mr-2" />
-                {t('fileList.actions.uploadAll')}
+                {isUploading ? 'Processing...' : t('fileList.actions.uploadAll')}
               </Button>
               <Button
                 onClick={clearAllFiles}
                 variant="outline"
                 size="sm"
+                disabled={isUploading}
               >
                 <i className="ri-delete-bin-line w-4 h-4 mr-2" />
                 {t('fileList.actions.clearAll')}
@@ -302,30 +265,66 @@ const FileUploader: React.FC = () => {
                     <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
                       {file.name}
                     </p>
-                    <Badge 
-                      variant={file.status === 'completed' ? 'default' : 'secondary'}
-                      className="ml-2"
-                    >
-                      <i className={`${getStatusIcon(file.status)} w-3 h-3 mr-1 ${
-                        file.status === 'uploading' ? 'animate-spin' : ''
-                      }`} />
-                      {t(`status.${file.status}`)}
-                    </Badge>
+                    <div className="flex items-center space-x-2">
+                      <Badge className={getStatusColor(file.status)}>
+                        <i className={`${getStatusIcon(file.status)} w-3 h-3 mr-1 ${
+                          file.status === 'uploading' || file.status === 'processing' ? 'animate-spin' : ''
+                        }`} />
+                        {t(`status.${file.status}`)}
+                      </Badge>
+                    </div>
                   </div>
                   
                   <div className="flex items-center justify-between">
                     <p className="text-xs text-gray-500 dark:text-gray-400">
                       {formatFileSize(file.size)}
                     </p>
-                    {file.status === 'uploading' && (
+                    {(file.status === 'uploading' || file.status === 'processing') && (
                       <span className="text-xs text-gray-500 dark:text-gray-400">
                         {Math.round(file.progress)}%
                       </span>
                     )}
                   </div>
 
-                  {file.status === 'uploading' && (
+                  {(file.status === 'uploading' || file.status === 'processing') && (
                     <Progress value={file.progress} className="mt-2 h-2" />
+                  )}
+
+                  {file.error && (
+                    <p className="text-xs text-red-600 dark:text-red-400 mt-1">
+                      {file.error}
+                    </p>
+                  )}
+
+                  {file.status === 'completed' && file.result && (
+                    <div className="mt-2 space-y-1">
+                      <p className="text-xs text-green-600 dark:text-green-400">
+                        ✓ Text extracted: {file.result.text_statistics?.word_count || 0} words
+                      </p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">
+                        Confidence: {Math.round((file.result.text_confidence || 0) * 100)}%
+                      </p>
+                      <div className="flex space-x-2 mt-2">
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => handleDownload(file, 'docx')}
+                          className="text-xs"
+                        >
+                          <i className="ri-download-line w-3 h-3 mr-1" />
+                          Download DOCX
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => handleDownload(file, 'txt')}
+                          className="text-xs"
+                        >
+                          <i className="ri-download-line w-3 h-3 mr-1" />
+                          Download TXT
+                        </Button>
+                      </div>
+                    </div>
                   )}
                 </div>
 
@@ -334,6 +333,7 @@ const FileUploader: React.FC = () => {
                   variant="ghost"
                   size="sm"
                   className="flex-shrink-0"
+                  disabled={isUploading && (file.status === 'uploading' || file.status === 'processing')}
                 >
                   <i className="ri-close-line w-4 h-4" />
                 </Button>
@@ -345,7 +345,7 @@ const FileUploader: React.FC = () => {
 
       {/* Upload Statistics */}
       {files.length > 0 && (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <Card className="p-4 text-center">
             <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
               {files.length}
@@ -357,6 +357,12 @@ const FileUploader: React.FC = () => {
               {files.filter(f => f.status === 'completed').length}
             </div>
             <div className="text-sm text-gray-600 dark:text-gray-400">{t('stats.processed')}</div>
+          </Card>
+          <Card className="p-4 text-center">
+            <div className="text-2xl font-bold text-red-600 dark:text-red-400">
+              {files.filter(f => f.status === 'error').length}
+            </div>
+            <div className="text-sm text-gray-600 dark:text-gray-400">Failed</div>
           </Card>
           <Card className="p-4 text-center">
             <div className="text-2xl font-bold text-gray-600 dark:text-gray-400">

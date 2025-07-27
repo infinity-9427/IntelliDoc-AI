@@ -63,7 +63,8 @@
     },
     "status": {
       "pending": "en attente",
-      "uploading": "téléchargement", 
+      "uploading": "téléchargement",
+      "processing": "traitement",
       "completed": "terminé",
       "error": "erreur"
     },

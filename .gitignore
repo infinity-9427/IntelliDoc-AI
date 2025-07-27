@@ -1,4 +1,8 @@
 implementation-plan.md
+backend/uploads/
+backend/uploads/*
+backend/uploads/**/*
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
