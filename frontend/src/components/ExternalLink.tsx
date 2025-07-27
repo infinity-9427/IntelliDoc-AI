@@ -1,10 +1,27 @@
 type Props = {
-  title: string;
-  description: string;
   href: string;
+  title?: string;
+  description?: string;
+  children?: React.ReactNode;
+  className?: string;
 };
 
-export default function ExternalLink({description, href, title}: Props) {
+export default function ExternalLink({description, href, title, children, className}: Props) {
+  // If children are provided, render as a simple inline link
+  if (children) {
+    return (
+      <a
+        className={className}
+        href={href}
+        rel="noreferrer"
+        target="_blank"
+      >
+        {children}
+      </a>
+    );
+  }
+
+  // Original card-style link for when title and description are provided
   return (
     <a
       className="inline-block rounded-md border border-gray-700 p-8 transition-colors hover:border-gray-400"

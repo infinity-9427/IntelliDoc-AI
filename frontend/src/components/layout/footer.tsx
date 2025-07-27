@@ -2,6 +2,7 @@
 
 import React from 'react'
 import { useTranslations } from 'next-intl'
+import ExternalLink from '@/components/ExternalLink'
 
 const Footer: React.FC = () => {
   const t = useTranslations('Footer')
@@ -59,7 +60,17 @@ const Footer: React.FC = () => {
               {t('copyright', { year: new Date().getFullYear() })}
             </div>
             <div className="flex items-center space-x-6 mt-4 md:mt-0">
-              <span className="text-sm text-gray-500 dark:text-gray-400">{t('tagline')}</span>
+              <span className="text-sm text-gray-500 dark:text-gray-400 flex items-center">
+                Built with{' '}
+                <i className="ri-heart-fill text-red-500 mx-1" />
+                {' '}by{' '}
+                <ExternalLink 
+                  href="https://theinfinitydev.com/en" 
+                  className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors font-medium ml-1"
+                >
+                  infinity dev
+                </ExternalLink>
+              </span>
             </div>
           </div>
         </div>
