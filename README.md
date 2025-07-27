@@ -1,7 +1,7 @@
 # IntelliDoc AI - Smart Document Intelligence Platform
 
 ## 🚀 Overview
-Transform any document into actionable insights using cutting-edge AI. Built for organizations that need enterprise-grade document processing without the enterprise costs.
+Transform any document into actionable insights using cutting-edge AI. Built for global organizations that need enterprise-grade document processing without the enterprise costs. Features a fully internationalized interface supporting 6 languages with seamless document processing in 100+ languages.
 
 ## 🎯 The Problem
 Organizations struggle with:
@@ -40,9 +40,32 @@ cd local-pdf-converter
 ```
 
 ### Access Your Application
-- **Web Interface**: http://localhost:3000
+- **Web Interface**: http://localhost:3000 (Available in 6 languages)
 - **API Documentation**: http://localhost:8000/docs
 - **Monitoring Dashboard**: http://localhost:3001
+
+**Language Access**: Simply add the language code to the URL:
+- English: http://localhost:3000/en
+- Spanish: http://localhost:3000/es  
+- German: http://localhost:3000/de
+- French: http://localhost:3000/fr
+- Italian: http://localhost:3000/it
+- Portuguese: http://localhost:3000/pr
+
+## 🌍 International Features
+
+### Comprehensive Localization
+- **6 Fully Translated Languages** - Complete interface localization
+- **Smart Language Switcher** - Seamless switching between languages
+- **URL-Based Routing** - Bookmarkable language-specific URLs
+- **Native Language Display** - Language names shown in their native script
+- **Cultural Adaptation** - Date, number, and currency formatting per locale
+
+### Global Document Processing
+- **100+ Language OCR** - Extract text from documents in any language
+- **Mixed-Language Documents** - Handle documents with multiple languages
+- **Unicode Support** - Full support for all character sets and scripts
+- **Right-to-Left Text** - Proper handling of RTL languages like Arabic and Hebrew
 
 ## ✨ Key Features
 
@@ -52,10 +75,18 @@ cd local-pdf-converter
 - **Content Analysis** - Generate summaries, analyze sentiment, and detect key insights
 - **Quality Assessment** - Confidence scoring and processing recommendations
 
-### Multi-Language Processing
-- **Global Support** - Process documents in 100+ languages
-- **Auto-Detection** - Intelligent language identification
+### Multi-Language Processing & Interface
+- **Document Processing** - Process documents in 100+ languages with advanced OCR
+- **Internationalized Interface** - Complete UI translation in 6 languages:
+  - 🇺🇸 **English** - Full interface support
+  - 🇪🇸 **Spanish** - Complete Spanish localization  
+  - 🇩🇪 **German** - Full German interface
+  - 🇫🇷 **French** - Complete French translation
+  - 🇮🇹 **Italian** - Full Italian localization
+  - 🇵🇹 **Portuguese** - Complete Portuguese interface
+- **Smart Language Detection** - Automatic language identification for documents
 - **Cross-Language Search** - Find content across different languages
+- **Global Accessibility** - Seamless language switching with URL-based routing
 
 ### Advanced Capabilities
 - **Batch Processing** - Handle thousands of documents efficiently
