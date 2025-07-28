@@ -11,16 +11,17 @@ services:
     environment:
       - OLLAMA_ORIGINS=*
       - OLLAMA_HOST=0.0.0.0:11434
+      - OLLAMA_KEEP_ALIVE=24h
+      - OLLAMA_MAX_LOADED_MODELS=2
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "ollama", "list"]
+      test: ["CMD", "ollama", "list", "llama3.2:3b", "&&", "ollama", "list", "nomic-embed-text"]
       interval: 30s
-      timeout: 10s
-      retries: 5
-      start_period: 60s
+      timeout: 30s
+      retries: 10
+      start_period: 300s  # Allow 5 minutes for model downloads
     # Override entrypoint to run our init script
     entrypoint: ["/bin/sh", "/usr/local/bin/init-ollama.sh"]
-    command: ["ollama", "serve"]
 
   postgres:
     image: postgres:15-alpine

@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 class OllamaAIService:
     """AI Service using local Ollama/Llama3 for document analysis"""
     
-    def __init__(self, ollama_host: str = "http://localhost:11435"):
+    def __init__(self, ollama_host: str = "http://localhost:11434"):
         self.ollama_host = ollama_host.rstrip('/')
         self.model_name = "llama3"  # Adjust if your model has a different name
         self.timeout = 120.0  # 2 minutes timeout for AI requests

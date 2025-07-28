@@ -11,7 +11,7 @@ from typing import Dict, Any, Optional
 
 # Production imports - No fallbacks allowed
 from app.models.schemas import DocumentProcessingResponse, ProcessingStatus
-from app.tasks.queue import task_queue
+from app.tasks.service import task_service
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -72,7 +72,7 @@ async def upload_document(file: UploadFile = File(...)):
         logger.info(f"File uploaded: {upload_path}")
         
         # Submit task to AI processing queue - Production mode only
-        job_id = await task_queue.submit_task(upload_path, file.filename)
+        job_id = await task_service.submit_task(upload_path, file.filename)
         return {
             "job_id": job_id,
             "status": ProcessingStatus.PENDING,
@@ -91,7 +91,7 @@ async def upload_document(file: UploadFile = File(...)):
 async def get_processing_status(job_id: str):
     """Get AI processing status for a job"""
     try:
-        task_status = task_queue.get_task_status(job_id)
+        task_status = task_service.get_task_status(job_id)
         
         if not task_status:
             raise HTTPException(status_code=404, detail="Job not found")
@@ -117,7 +117,7 @@ async def get_processing_status(job_id: str):
 async def get_document_results(job_id: str):
     """Get the detailed AI analysis results of a processed document"""
     try:
-        task_status = task_queue.get_task_status(job_id)
+        task_status = task_service.get_task_status(job_id)
         
         if not task_status:
             raise HTTPException(status_code=404, detail="Job not found")
@@ -142,7 +142,7 @@ async def download_processed_document(job_id: str, format: str = Query("docx", r
     Download the processed document in specified format
     """
     try:
-        task_status = task_queue.get_task_status(job_id)
+        task_status = task_service.get_task_status(job_id)
         
         if not task_status:
             raise HTTPException(status_code=404, detail="Job not found")

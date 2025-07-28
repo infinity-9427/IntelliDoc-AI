@@ -1,4 +1,4 @@
 from .pdf_service import PDFService
-from .ai_service import AIService
+from .ollama_ai_service import OllamaAIService as AIService
 
 __all__ = ['PDFService', 'AIService']

@@ -24,30 +24,38 @@ IntelliDoc AI provides:
 ### Prerequisites
 - Docker & Docker Compose installed
 - 8GB RAM minimum (16GB recommended)
-- 15GB free disk space (for AI models)
+- 10GB free disk space (for AI models)
 - Internet connection for initial model download
 
-### One-Command Setup
+### One-Command Deployment
 ```bash
 # 1. Clone the repository
-git clone https://github.com/infinity-9427/IntelliDoc-AI.git
-cd IntelliDoc-AI
+git clone <repository-url>
+cd local-pdf-converter
 
-# 2. Start everything (includes automatic AI model download)
-docker compose up --build -d
+# 2. Start everything automatically
+./start.sh
 ```
 
 **That's it!** 🎉 
 
-### What Happens Automatically:
-1. **Infrastructure Setup** - PostgreSQL, Redis, Elasticsearch, MinIO
-2. **AI Model Download** - LLaMA 3.2:3b (2GB) + Embedding models (274MB)
-3. **Service Startup** - Backend, Frontend, and all components
-4. **Health Checks** - Ensures everything is running correctly
+The script will automatically:
+1. **Check System Requirements** - Verify Docker and resources
+2. **Setup Environment** - Generate secure configurations
+3. **Build All Services** - Create Docker containers
+4. **Download AI Models** - LLaMA 3.2:3b (2GB) + Embedding models (274MB)
+5. **Start Complete Platform** - All services with health checks
+6. **Verify Deployment** - Ensure everything is working
 
-### Initial Setup Time:
-- **First run**: 5-8 minutes (includes model downloads)
-- **Subsequent runs**: 30-60 seconds
+### Alternative: Manual Docker Compose
+```bash
+# If you prefer standard Docker Compose
+docker compose up --build -d
+```
+
+### Deployment Time:
+- **First run**: 8-12 minutes (includes model downloads)
+- **Subsequent runs**: 1-2 minutes
 
 ### Access Your Application
 - **Web Interface**: http://localhost:3000 (Available in 6 languages)

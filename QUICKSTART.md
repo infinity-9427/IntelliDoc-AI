@@ -1,72 +1,134 @@
-# Quick Start Guide
+# 🚀 IntelliDoc AI - Quick Start Guide
 
-## Automatic Setup (Recommended)
-
-The entire application with all AI models will be automatically set up when you run:
+## ⚡ One-Command Deployment
 
 ```bash
-# Clone the repository
-git clone <your-repo-url>
+# 1. Clone the repository
+git clone <repository-url>
 cd local-pdf-converter
 
-# Start everything (this will automatically download AI models)
+# 2. Run the automated setup
+./start.sh
+```
+
+**That's it!** The system will automatically handle everything.
+
+## 🔧 What Happens Automatically
+
+### ✅ System Check
+- Verifies Docker installation
+- Checks available memory (8GB+ recommended)
+- Confirms disk space (10GB+ needed)
+
+### ✅ Environment Setup
+- Generates secure passwords and secrets
+- Creates required directories
+- Sets up configuration files
+
+### ✅ Service Deployment
+- Builds all Docker containers
+- Starts infrastructure (PostgreSQL, Redis, Elasticsearch, MinIO)
+- Downloads AI models (LLaMA 3.2:3b + nomic-embed-text)
+- Launches application services (Backend, Frontend, Celery workers)
+- Starts monitoring (Prometheus, Grafana)
+
+### ✅ Health Verification
+- Confirms all services are running
+- Verifies AI models are loaded
+- Validates API endpoints
+
+## 📊 Access Points
+
+After setup completes (8-12 minutes first time):
+
+- **📱 Main Application**: http://localhost:3000
+- **📋 API Documentation**: http://localhost:8000/docs
+- **📈 Monitoring Dashboard**: http://localhost:3001
+- **💾 Storage Interface**: http://localhost:9001
+
+## 🔧 Management Commands
+
+```bash
+# View all services status
+docker compose ps
+
+# Check service logs
+docker compose logs -f [service-name]
+
+# Stop all services
+docker compose down
+
+# Restart specific service
+docker compose restart [service-name]
+
+# Verify AI models
+docker exec intellidoc-ollama ollama list
+```
+
+## 🆘 Troubleshooting
+
+### AI Models Not Loading
+```bash
+# Restart Ollama service
+docker compose restart ollama
+
+# Check Ollama logs
+docker compose logs ollama
+
+# Manually pull models
+docker exec intellidoc-ollama ollama pull llama3.2:3b
+docker exec intellidoc-ollama ollama pull nomic-embed-text
+```
+
+### Service Issues
+```bash
+# Check which services are unhealthy
+docker compose ps
+
+# View detailed logs for specific service
+docker compose logs --tail=100 [service-name]
+
+# Restart all services
+docker compose restart
+```
+
+### Complete Reset
+```bash
+# Stop and remove everything
+docker compose down --volumes --remove-orphans
+
+# Clean up Docker system
+docker system prune -f
+
+# Start fresh
+./start.sh
+```
+
+## 🎯 Alternative: Manual Docker Compose
+
+If you prefer standard Docker Compose:
+
+```bash
+# Start with automatic build
 docker compose up --build -d
 
-# For development with debug logging
+# For development mode
 docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build -d
 ```
 
-## What happens automatically:
+## ⏱️ Timing Expectations
 
-1. **Ollama Service**: Starts and automatically downloads required AI models:
-   - `llama3.2:3b` - Main language model for text processing
-   - `nomic-embed-text` - Embedding model for semantic search
+- **First deployment**: 8-12 minutes (includes model downloads)
+- **Subsequent starts**: 1-2 minutes  
+- **AI model downloads**: ~2.3GB total
+- **Container builds**: 3-5 minutes
 
-2. **Backend Services**: FastAPI application with OCR and AI capabilities
+## 🌍 Multi-Language Support
 
-3. **Frontend**: Next.js web interface
-
-4. **Infrastructure**: PostgreSQL, Redis, Elasticsearch, MinIO, monitoring stack
-
-## First-time Setup Notes:
-
-- **Initial startup takes 3-5 minutes** due to AI model downloads (~2GB total)
-- Models are cached in Docker volumes for faster subsequent startups
-- All services will automatically wait for Ollama models to be ready
-
-## Verify Installation:
-
-```bash
-# Check all services are running
-docker compose ps
-
-# Check AI models are available
-docker exec intellidoc-ollama ollama list
-
-# Access the application
-open http://localhost:3000
-```
-
-## Troubleshooting:
-
-If Ollama fails to download models:
-```bash
-# Restart just the Ollama service
-docker compose restart ollama
-
-# Check logs
-docker compose logs ollama
-```
-
-## Manual Model Management:
-
-```bash
-# Pull additional models
-docker exec intellidoc-ollama ollama pull <model-name>
-
-# List available models
-docker exec intellidoc-ollama ollama list
-
-# Remove a model
-docker exec intellidoc-ollama ollama rm <model-name>
-```
+Access the application in different languages:
+- English: http://localhost:3000/en
+- Spanish: http://localhost:3000/es
+- German: http://localhost:3000/de
+- French: http://localhost:3000/fr
+- Italian: http://localhost:3000/it
+- Portuguese: http://localhost:3000/pr

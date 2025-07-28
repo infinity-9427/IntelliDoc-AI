@@ -86,12 +86,23 @@ class PDFService:
                 update_progress(90)
             else:
                 logger.warning("AI service not available or no text extracted")
+                # Calculate basic text statistics even without AI service
+                words = combined_text.split() if combined_text else []
+                sentences = [s for s in combined_text.split('.') if s.strip()] if combined_text else []
+                
                 result.update({
                     'document_classification': {'type': 'unknown', 'confidence': 0.0},
                     'entities': [],
                     'sentiment_analysis': {'overall_sentiment': 'neutral', 'confidence': 0.5},
                     'key_information': {},
-                    'summary': 'No summary available - insufficient text or AI service unavailable'
+                    'summary': 'No summary available - insufficient text or AI service unavailable',
+                    'text_statistics': {
+                        'character_count': len(combined_text) if combined_text else 0,
+                        'word_count': len(words),
+                        'sentence_count': len(sentences),
+                        'average_words_per_sentence': len(words) / len(sentences) if sentences else 0,
+                        'average_characters_per_word': len(combined_text) / len(words) if words and combined_text else 0
+                    }
                 })
                 update_progress(90)
             
