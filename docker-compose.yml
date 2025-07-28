@@ -21,7 +21,7 @@ services:
       retries: 10
       start_period: 300s  # Allow 5 minutes for model downloads
     # Override entrypoint to run our init script
-    entrypoint: ["/bin/sh", "/usr/local/bin/init-ollama.sh"]
+    entrypoint: ["/bin/bash", "/usr/local/bin/init-ollama.sh"]
 
   postgres:
     image: postgres:15-alpine

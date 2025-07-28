@@ -2,6 +2,7 @@ import asyncio
 import logging
 import re
 import json
+import os
 from typing import Dict, Any, List, Optional
 import httpx
 from textblob import TextBlob
@@ -13,10 +14,12 @@ logger = logging.getLogger(__name__)
 class OllamaAIService:
     """AI Service using local Ollama/Llama3 for document analysis"""
     
-    def __init__(self, ollama_host: str = "http://localhost:11434"):
-        self.ollama_host = ollama_host.rstrip('/')
-        self.model_name = "llama3"  # Adjust if your model has a different name
-        self.timeout = 120.0  # 2 minutes timeout for AI requests
+    def __init__(self, ollama_host: Optional[str] = None, model_name: Optional[str] = None):
+        # Read from environment variables with fallbacks
+        self.ollama_host = (ollama_host or os.getenv("OLLAMA_HOST", "http://localhost:11434")).rstrip('/')
+        self.model_name = model_name or os.getenv("OLLAMA_MODEL", "llama3.2:3b")
+        self.embed_model = os.getenv("OLLAMA_EMBED_MODEL", "nomic-embed-text")
+        self.timeout = float(os.getenv("OLLAMA_TIMEOUT", "120.0"))
         
         # HTTP client for async requests
         self.client = httpx.AsyncClient(timeout=httpx.Timeout(self.timeout))
@@ -36,13 +39,29 @@ class OllamaAIService:
                 available_models = [model['name'] for model in models]
                 logger.info(f"Available Ollama models: {available_models}")
                 
-                # Check if our preferred model is available
-                if not any('llama3' in model.lower() for model in available_models):
-                    logger.warning(f"Llama3 model not found. Available models: {available_models}")
-                    if available_models:
-                        self.model_name = available_models[0].split(':')[0]  # Use first available
-                        logger.info(f"Using model: {self.model_name}")
+                # Check if our configured model is available
+                model_found = False
+                for model in available_models:
+                    if self.model_name in model or model in self.model_name:
+                        self.model_name = model  # Use the exact model name from Ollama
+                        model_found = True
+                        break
                 
+                if not model_found:
+                    logger.warning(f"Configured model '{self.model_name}' not found. Available models: {available_models}")
+                    # Check for llama3 variants
+                    for model in available_models:
+                        if 'llama3' in model.lower():
+                            self.model_name = model
+                            model_found = True
+                            logger.info(f"Using similar model: {self.model_name}")
+                            break
+                    
+                    if not model_found and available_models:
+                        self.model_name = available_models[0]  # Use first available as fallback
+                        logger.info(f"Using fallback model: {self.model_name}")
+                
+                logger.info(f"Using Ollama model: {self.model_name}")
                 return True
             else:
                 logger.error(f"Ollama not accessible: {response.status_code}")

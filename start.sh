@@ -17,6 +17,7 @@ fi
 # Colors for output
 GREEN='\033[0;32m'
 BLUE='\033[0;34m'
+YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
 echo -e "${BLUE}This will set up the complete IntelliDoc AI platform with:${NC}"
@@ -45,4 +46,11 @@ echo ""
 chmod +x scripts/setup.sh
 
 # Run setup with any passed arguments
-exec ./scripts/setup.sh "$@"
+./scripts/setup.sh "$@"
+
+# Deployment complete
+if [ $? -eq 0 ]; then
+    echo ""
+    echo -e "${GREEN}🎉 IntelliDoc AI is fully operational!${NC}"
+    echo -e "${GREEN}📄 Upload documents at http://localhost:3000 for AI-powered analysis${NC}"
+fi
