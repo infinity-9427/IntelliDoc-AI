@@ -217,10 +217,77 @@ class DocumentGenerator:
                 lines.append("EXTRACTED TEXT:")
                 lines.append("=" * 50)
                 lines.append("")
-                lines.append(result['extracted_text'])
+                
+                # Clean and format the extracted text for better readability
+                formatted_text = DocumentGenerator._format_extracted_text(result['extracted_text'])
+                lines.append(formatted_text)
             
             return '\n'.join(lines)
             
         except Exception as e:
             logger.error(f"Error creating text document: {str(e)}")
             return f"Error creating text document: {str(e)}"
+    
+    @staticmethod
+    def _format_extracted_text(extracted_text: str) -> str:
+        """
+        Format extracted text for better readability by cleaning up OCR artifacts
+        """
+        import re
+        
+        if not extracted_text:
+            return ""
+        
+        # Clean up the text
+        formatted_text = extracted_text
+        
+        # Remove excessive whitespace and fix spacing
+        formatted_text = re.sub(r'\s+', ' ', formatted_text)
+        
+        # Fix page break markers
+        formatted_text = re.sub(r'\n--- Page \d+ ---\n', '\n\n--- PAGE BREAK ---\n\n', formatted_text)
+        
+        # Fix OCR supplementary sections
+        formatted_text = re.sub(r'\n--- OCR.*?---\n', '\n\n--- OCR SECTION ---\n', formatted_text)
+        
+        # Improve paragraph structure
+        # Split on logical breaks and clean each section
+        sections = formatted_text.split('\n\n')
+        cleaned_sections = []
+        
+        for section in sections:
+            # Clean up each section
+            section = section.strip()
+            if section:
+                # Remove excessive spaces within lines
+                section = re.sub(r' {2,}', ' ', section)
+                
+                # Fix common OCR spacing issues
+                section = re.sub(r'\s+([,.;:!?])', r'\1', section)  # Remove spaces before punctuation
+                section = re.sub(r'([.!?])([A-Z])', r'\1 \2', section)  # Add space after sentence endings
+                
+                # Fix phone number formatting
+                section = re.sub(r'\{\s*(\d{3})-?(\d{3})-?(\d{4})\s*\}', r'(\1) \2-\3', section)
+                
+                # Fix email formatting
+                section = re.sub(r'\{\s*([^@\s]+@[^@\s]+\.[^@\s]+)\s*\}', r'\1', section)
+                
+                # Fix website formatting
+                section = re.sub(r'\{\s*([a-zA-Z0-9.-]+\.[a-zA-Z]{2,})\s*\}', r'\1', section)
+                
+                # Fix social media formatting
+                section = re.sub(r'\{([^}]+)\}', r'\1', section)
+                
+                # Remove excessive newlines within sections
+                section = re.sub(r'\n{3,}', '\n\n', section)
+                
+                cleaned_sections.append(section)
+        
+        # Rejoin sections with appropriate spacing
+        formatted_text = '\n\n'.join(cleaned_sections)
+        
+        # Final cleanup
+        formatted_text = re.sub(r'\n{3,}', '\n\n', formatted_text)
+        formatted_text = formatted_text.strip()
+        
+        return formatted_text
